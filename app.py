@@ -4,6 +4,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
 from io import BytesIO
+from xhtml2pdf import pisa
 import streamlit as st
 from streamlit_quill import st_quill
 
@@ -113,17 +114,41 @@ def main():
 
     #-------------------------Generación de PDF-------------------------
 
-    lista_experiencia = [{"Puesto": st.session_state[f"puesto_{i}"],"Empresa": st.session_state[f"empresa_{i}"],"Inicio": st.session_state[f"inicio_{i}"],"Fin": st.session_state[f"fin_{i}"],"Tareas y logros": st.session_state[f"tareas_{i}"]}
-                            for i in range(st.session_state.num_experiencia)]
+    lista_experiencia = [
+    {
+        "Puesto": st.session_state.get(f"puesto_{i}", ""),
+        "Empresa": st.session_state.get(f"empresa_{i}", ""),
+        "Inicio": st.session_state.get(f"inicio_{i}", ""),
+        "Fin": st.session_state.get(f"fin_{i}", ""),
+        "Tareas y logros": "<br/>".join([f"• {linea.strip()}"for linea in str(st.session_state.get(f"tareas_{i}", "")).split("\n") if linea.strip()])
+    }
+    for i in range(st.session_state.num_experiencia)]
+
+
+    lista_educacion = [
+        {
+            "Titulo": st.session_state[f"titulo_{i}"],
+            "Año": st.session_state[f"anio_{i}"],
+            "Institución": st.session_state[f"institucion_{i}"]
+        }
+        for i in range(st.session_state.num_educacion)]
         
-    lista_educacion = [{"Titulo": st.session_state[f"titulo_{i}"],"Año": st.session_state[f"anio_{i}"],"Institución": st.session_state[f"institucion_{i}"],}
-                           for i in range(st.session_state.num_educacion)]
-        
-    lista_idiomas = [{"Idioma": st.session_state[f"idioma_{i}"],"Nivel": st.session_state[f"nivel_{i}"]}
-                         for i in range(st.session_state.num_idioma)]
+    lista_idiomas = [
+        {
+            "Idioma": st.session_state[f"idioma_{i}"],
+            "Nivel": st.session_state[f"nivel_{i}"]
+        }
+        for i in range(st.session_state.num_idioma)]
     
-    lista_certificaciones = [{"Certificación": st.session_state[f"cert_{i}"],"Institución": st.session_state[f"inst_{i}"], "Año": st.session_state[f"anio_cert_{i}"]}
-                             for i in range(st.session_state.num_cert)]
+    lista_certificaciones = [
+        {
+            "Certificación": st.session_state[f"cert_{i}"],
+            "Institución": st.session_state[f"inst_{i}"], 
+            "Año": st.session_state[f"anio_cert_{i}"]
+        }
+        for i in range(st.session_state.num_cert)]
+    
+    lista_habilidades = [h.strip() for h in habilidades.split(",") if h.strip()]
         
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer)
@@ -176,6 +201,11 @@ def main():
     elementos.append(division)
     for item in lista_certificaciones:
         elementos.append(Paragraph(f"<b>{item['Certificación']}</b> - {item['Institución']} - {item['Año']}"))
+
+    elementos.append(Paragraph("HABILIDADES", formato_seccion))
+    elementos.append(division)
+    habilidades_text = " | ".join(lista_habilidades) 
+    elementos.append(Paragraph(habilidades_text, formato_contenido))
             
     doc.build(elementos)
     pdf_final = buffer.getvalue()
