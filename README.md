@@ -57,13 +57,45 @@ Luego abre en el navegador la URL que muestra Streamlit (normalmente http://loca
 ```text
 CV-Builder/
 	app.py              # Aplicacion principal Streamlit
+	assets/
+		screenshots/     # Capturas de pantalla del proyecto
+		demo/            # GIF o video corto de demostracion
 	requirements.txt    # Dependencias del proyecto
 	README.md           # Documentacion
 	LICENSE             # Licencia
 ```
 
-## Notas
+## Capturas y demo
 
-- El proyecto esta orientado a ejecucion local.
-- Si cambias dependencias, actualiza requirements.txt para mantener el entorno reproducible.
+Puedes mostrar la app directamente en el README usando imagenes y un GIF.
+
+1. Guarda tus capturas en `assets/screenshots/`.
+2. Guarda el GIF de demo en `assets/demo/`.
+3. Usa nombres simples para mantener enlaces claros.
+
+Ejemplo sugerido:
+
+```text
+assets/
+  screenshots/
+    home.png
+    seccion-experiencia.png
+    pdf-generado.png
+  demo/
+    cv-builder-demo.gif
+```
+
+Bloque listo para pegar (puedes reemplazar los archivos por los tuyos):
+
+```md
+## Capturas
+
+![Pantalla principal](assets/screenshots/home.png)
+![Seccion de experiencia](assets/screenshots/seccion-experiencia.png)
+![PDF generado](assets/screenshots/pdf-generado.png)
+
+## Demo en GIF
+
+![Demo CV Builder](assets/demo/cv-builder-demo.gif)
+```
 
