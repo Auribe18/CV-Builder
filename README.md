@@ -65,37 +65,11 @@ CV-Builder/
 	LICENSE             # Licencia
 ```
 
-## Capturas y demo
-
-Puedes mostrar la app directamente en el README usando imagenes y un GIF.
-
-1. Guarda tus capturas en `assets/screenshots/`.
-2. Guarda el GIF de demo en `assets/demo/`.
-3. Usa nombres simples para mantener enlaces claros.
-
-Ejemplo sugerido:
-
-```text
-assets/
-  screenshots/
-    home.png
-    seccion-experiencia.png
-    pdf-generado.png
-  demo/
-    cv-builder-demo.gif
-```
-
-Bloque listo para pegar (puedes reemplazar los archivos por los tuyos):
-
-```md
 ## Capturas
 
-![Pantalla principal](assets/screenshots/home.png)
-![Seccion de experiencia](assets/screenshots/seccion-experiencia.png)
-![PDF generado](assets/screenshots/pdf-generado.png)
+[Pantalla principal](assets/screenshots/home.png)
+[Seccion de experiencia](assets/screenshots/seccion-experiencia.png)
+[PDF generado](assets/screenshots/pdf-generado.png)
 
-## Demo en GIF
-
-![Demo CV Builder](assets/demo/cv-builder-demo.gif)
 ```
 
