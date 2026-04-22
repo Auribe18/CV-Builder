@@ -145,7 +145,7 @@ def main():
     lista_educacion = [
         {
             "Titulo": st.session_state[f"titulo_{i}"],
-            "Año": st.session_state[f"anio_{i}"].strftime("%b %Y") if st.session_state.get(f"inicio_{i}") else "",
+            "Año": st.session_state[f"anio_{i}"].strftime("%b %Y") if st.session_state.get(f"anio_{i}") else "",
             "Institución": st.session_state[f"institucion_{i}"]
         }
         for i in range(st.session_state.num_educacion)]
@@ -161,7 +161,7 @@ def main():
         {
             "Certificación": st.session_state[f"cert_{i}"],
             "Institución": st.session_state[f"inst_{i}"], 
-            "Año": st.session_state[f"anio_cert_{i}"].strftime("%b %Y") if st.session_state.get(f"inicio_{i}") else ""
+            "Año": st.session_state[f"anio_cert_{i}"].strftime("%b %Y") if st.session_state.get(f"anio_cert_{i}") else ""
         }
         for i in range(st.session_state.num_cert)]
     
