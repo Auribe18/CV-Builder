@@ -135,8 +135,8 @@ def main():
     {
         "Puesto": st.session_state.get(f"puesto_{i}", ""),
         "Empresa": st.session_state.get(f"empresa_{i}", ""),
-        "Inicio": st.session_state.get(f"inicio_{i}", ""),
-        "Fin": st.session_state.get(f"fin_{i}", ""),
+        "Inicio": st.session_state[f"inicio_{i}"].strftime("%b %Y") if st.session_state.get(f"inicio_{i}") else "",
+        "Fin": st.session_state[f"fin_{i}"].strftime("%b %Y") if st.session_state.get(f"fin_{i}") else "Presente",
         "Tareas y logros": "<br/>".join([f"• {linea.strip()}"for linea in str(st.session_state.get(f"tareas_{i}", "")).split("\n") if linea.strip()])
     }
     for i in range(st.session_state.num_experiencia)]
@@ -145,7 +145,7 @@ def main():
     lista_educacion = [
         {
             "Titulo": st.session_state[f"titulo_{i}"],
-            "Año": st.session_state[f"anio_{i}"],
+            "Año": st.session_state[f"anio_{i}"].strftime("%b %Y") if st.session_state.get(f"inicio_{i}") else "",
             "Institución": st.session_state[f"institucion_{i}"]
         }
         for i in range(st.session_state.num_educacion)]
@@ -161,7 +161,7 @@ def main():
         {
             "Certificación": st.session_state[f"cert_{i}"],
             "Institución": st.session_state[f"inst_{i}"], 
-            "Año": st.session_state[f"anio_cert_{i}"]
+            "Año": st.session_state[f"anio_cert_{i}"].strftime("%b %Y") if st.session_state.get(f"inicio_{i}") else ""
         }
         for i in range(st.session_state.num_cert)]
     
