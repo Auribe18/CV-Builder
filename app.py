@@ -210,25 +210,26 @@ def main():
     elementos.append(Paragraph("EDUCACIÓN", formato_seccion))
     elementos.append(division)
     for item in lista_educacion:
-        elementos.append(Paragraph(f"<b>{item['Titulo']}</b> - {item['Institución']} - {item['Año']}"))
-        elementos.append(Spacer(1, 10))   
-    elementos.append(Spacer(1, 15))
+        elementos.append(Paragraph(f"<b>{item['Titulo']}</b> - {item['Institución']} | {item['Año']}"))  
+    elementos.append(Spacer(1, 10))
 
     elementos.append(Paragraph("IDIOMAS", formato_seccion))
     elementos.append(division)
     for item in lista_idiomas:
         elementos.append(Paragraph(f"<b>{item['Idioma']}:</b> {item['Nivel']}"))
+    elementos.append(Spacer(1, 10))
 
     elementos.append(Paragraph("CERTIFICACIONES", formato_seccion))
     elementos.append(division)
     for item in lista_certificaciones:
         elementos.append(Paragraph(f"<b>{item['Certificación']}</b> - {item['Institución']} - {item['Año']}"))
+    elementos.append(Spacer(1, 10))
 
     elementos.append(Paragraph("HABILIDADES", formato_seccion))
     elementos.append(division)
     for item in lista_habilidades:
         elementos.append(Paragraph(f"<b>{item['Categoría']}:</b> {item['Habilidades']}"))
-            
+    elementos.append(Spacer(1, 10))     
     doc.build(elementos)
     pdf_final = buffer.getvalue()
 
