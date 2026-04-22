@@ -187,7 +187,7 @@ def main():
     division_light = HRFlowable(width="100%", thickness=0.3, color="grey", spaceAfter=20)
     
     titulo = Paragraph(f'{nombre}', formato_nombre)
-    contacto = Paragraph(f"{direccion} | {email} | {teléfono} | {links}", formato_contacto)
+    contacto = Paragraph(f"{direccion} | {email} | {teléfono} | <link>{links}</link>", formato_contacto)
     perfil_profesional = Paragraph(f"{perfil}",formato_contenido)
 
     elementos.append(titulo)
