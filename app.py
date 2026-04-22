@@ -109,8 +109,23 @@ def main():
         st.session_state.num_cert += 1
         st.rerun()
 
+    #Contador para Categoría de Habilidades
+    st.header("Habilidades")
+    if 'num_hab' not in st.session_state:
+        st.session_state.num_hab = 1
+
     #Campos para habilidades
-    habilidades = st.text_input("Habilidades (Separar con ,)")
+    for i in range(st.session_state.num_hab):
+        with st.expander(f"Categoría de habilidades #{i+1}", expanded=True):
+            col1, col2 = st.columns(2)
+            with col1:
+                st.text_input(f"Categoría", key=f"cat_{i}")
+            with col2:
+                st.text_input(f"Habilidades (separadas por , )", key=f"hab_{i}")
+    
+    if st.button("➕ Agregar Categoría de Habilidades"):
+        st.session_state.num_hab += 1
+        st.rerun()
 
     #-------------------------Generación de PDF-------------------------
 
@@ -148,7 +163,12 @@ def main():
         }
         for i in range(st.session_state.num_cert)]
     
-    lista_habilidades = [h.strip() for h in habilidades.split(",") if h.strip()]
+    lista_habilidades = [
+        {
+            "Categoría": st.session_state[f"cat_{i}"],
+            "Habilidades": st.session_state[f"hab_{i}"]
+        }
+        for i in range(st.session_state.num_hab)]
         
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer)
@@ -204,8 +224,8 @@ def main():
 
     elementos.append(Paragraph("HABILIDADES", formato_seccion))
     elementos.append(division)
-    habilidades_text = " | ".join(lista_habilidades) 
-    elementos.append(Paragraph(habilidades_text, formato_contenido))
+    for item in lista_habilidades:
+        elementos.append(Paragraph(f"<b>{item['Categoría']}:</b> {item['Habilidades']}"))
             
     doc.build(elementos)
     pdf_final = buffer.getvalue()
