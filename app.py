@@ -7,10 +7,12 @@ from io import BytesIO
 from xhtml2pdf import pisa
 import streamlit as st
 from streamlit_quill import st_quill
+from datetime import date
 
 def main():
     st.title("Generador de CV")
-
+    fecha_minima = date(1950, 1, 1)
+    fecha_maxima = date.today()
     #Barra de herramientas customizadas para ST_QUILL
     custom_toolbar = [{'list':'bullet'}]
     #Datos Básicos
@@ -38,10 +40,10 @@ def main():
             col1, col2 = st.columns(2)
             with col1:
                 st.text_input(f"Puesto", key=f"puesto_{i}")
-                st.date_input(f"Inicio", key=f"inicio_{i}",format="DD/MM/YYYY")
+                st.date_input(f"Inicio", key=f"inicio_{i}",format="DD/MM/YYYY",min_value=fecha_minima,max_value=fecha_maxima)
             with col2:
                 st.text_input(f"Empresa", key=f"empresa_{i}")
-                st.date_input(f"Fin", key=f"fin_{i}",format="DD/MM/YYYY")
+                st.date_input(f"Fin", key=f"fin_{i}",format="DD/MM/YYYY",min_value=fecha_minima,max_value=fecha_maxima)
             st.text("Tareas y logros")
             st_quill(key=f"tareas_{i}",toolbar=custom_toolbar)
             
@@ -63,7 +65,7 @@ def main():
             with col2:
                 st.text_input(f"Institución", key=f"institucion_{i}")
             with col3:
-                st.date_input(f"Fecha", key=f"anio_{i}",format="DD/MM/YYYY")
+                st.date_input(f"Fecha", key=f"anio_{i}",format="DD/MM/YYYY",min_value=fecha_minima,max_value=fecha_maxima)
                 #st.text_input(f"Año", key=f"anio_{i}")
    
     if st.button("➕ Agregar Educación"):
@@ -103,7 +105,7 @@ def main():
             with col2:
                 st.text_input(f"Institución", key=f"inst_{i}")
             with col3:
-                st.date_input(f"Fecha", key=f"anio_cert_{i}",format="DD/MM/YYYY")
+                st.date_input(f"Fecha", key=f"anio_cert_{i}",format="DD/MM/YYYY",min_value=fecha_minima,max_value=fecha_maxima)
    
     if st.button("➕ Agregar Certificación"):
         st.session_state.num_cert += 1
