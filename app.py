@@ -15,10 +15,9 @@ def main():
          st.header("💡 Tips & Tricks")
          st.markdown("""
     ### 1. Formato de Texto
-    Puedes usar estas etiquetas en tus **Tareas y Logros** para resaltar información:
+    Puedes usar estas etiquetas en tus **Perfil y Tareas y Logros** para resaltar información:
     * `<b>Texto</b>` → **Negrita** (Úsalo para KPIs).
     * `<i>Texto</i>` → *Cursiva*.
-    * `<u>Texto</u>` → <u>Subrayado</u>.
     
     ---
     ### 2. Enfoque en Logros
