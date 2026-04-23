@@ -3,6 +3,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
+from reportlab.lib.colors import HexColor
 from io import BytesIO
 import streamlit as st
 from streamlit_quill import st_quill
@@ -177,13 +178,49 @@ def main():
     elementos = []
     
     # Estilos personalizados para claridad
-    formato_nombre = ParagraphStyle('Nombre', parent=styles['Heading1'], alignment=TA_CENTER, fontSize=18, spaceAfter=5)
-    formato_contacto = ParagraphStyle('Contacto', parent=styles['Normal'], alignment=TA_CENTER, fontSize=10, spaceAfter=6)
-    formato_contenido = ParagraphStyle('Contenido', parent=styles['Normal'], alignment=TA_JUSTIFY, fontSize=10, spaceAfter=12)
-    formato_seccion = ParagraphStyle('Seccion', parent=styles['Heading2'], fontSize=12, spaceBefore=10, spaceAfter=1, borderPadding=2)
+    COLOR_TITULO = HexColor('#2C3E50')  # Gris azulado 
+    COLOR_LINEA = HexColor('#BDC3C7')   # Gris claro
 
-    division = HRFlowable(width="100%", thickness=1, color="black", spaceAfter=10)
-    division_light = HRFlowable(width="100%", thickness=0.3, color="grey", spaceAfter=20)
+    formato_nombre = ParagraphStyle(
+        'Nombre', 
+        parent=styles['Heading1'], 
+        alignment=TA_CENTER, 
+        fontSize=18, 
+        spaceAfter=5)
+    formato_contacto = ParagraphStyle(
+        'Contacto', 
+        parent=styles['Normal'], 
+        alignment=TA_CENTER, 
+        fontSize=10, 
+        spaceAfter=6)
+    formato_contenido = ParagraphStyle(
+        'Contenido', 
+        parent=styles['Normal'], 
+        alignment=TA_JUSTIFY, 
+        fontSize=10,
+        leading=14,
+        textColor=HexColor('#34495E'),  # Gris oscuro para el texto 
+        spaceAfter=12)
+    formato_seccion = ParagraphStyle(
+        'Seccion', 
+        parent=styles['Heading2'], 
+        fontSize=11,
+        textColor=COLOR_TITULO, 
+        spaceBefore=15, 
+        spaceAfter=8,
+        fontName="Helvetica-Bold",
+        textTransform="uppercase",
+        letterSpacing=1)
+    division = HRFlowable(
+        width="100%", 
+        thickness=0.5, 
+        color=COLOR_LINEA, 
+        spaceAfter=10)
+    division_light = HRFlowable(
+        width="100%", 
+        thickness=0.3, 
+        color=COLOR_LINEA, 
+        spaceAfter=10)
     
     titulo = Paragraph(f'{nombre}', formato_nombre)
     contacto = Paragraph(f"{direccion} | {email} | {teléfono} | <link>{links}</link>", formato_contacto)
