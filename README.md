@@ -65,11 +65,3 @@ CV-Builder/
 	LICENSE             # Licencia
 ```
 
-## Capturas
-
-[Pantalla principal](assets/screenshots/home.png)
-[Seccion de experiencia](assets/screenshots/seccion-experiencia.png)
-[PDF generado](assets/screenshots/pdf-generado.png)
-
-```
-
