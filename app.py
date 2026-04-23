@@ -49,7 +49,7 @@ def main():
         teléfono = esc(st.text_input("Teléfono"))
         links = esc(st.text_input("LinkedIn o Potafolio"))
     direccion = esc(st.text_input("Dirección"))
-    perfil = esc(st.text_area("Perfil"))
+    perfil = esc(st.text_area("Perfil")).replace('&lt;b&gt;', '<b>').replace('&lt;/b&gt;', '</b>').replace('&lt;i&gt;', '<i>').replace('&lt;/i&gt;', '</i>').replace('&lt;u&gt;', '<u>').replace('&lt;/u&gt;', '</u>')
 
     #Experiencia
     st.header("Experiencia Laboral")
