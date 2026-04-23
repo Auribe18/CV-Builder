@@ -8,9 +8,30 @@ from io import BytesIO
 import streamlit as st
 from streamlit_quill import st_quill
 from datetime import date
+import html
 
 def main():
+    with st.sidebar:
+         st.markdown("""
+            ### 1. Formato de Texto Permitido
+            En la sección de **Tareas y Logros**, puedes usar etiquetas básicas para resaltar información. El sistema las procesará correctamente para el PDF:
+            *   `<b>Tu texto</b>` para **Negrita** (Ideal para palabras clave o KPIs).
+            *   `<i>Tu texto</i>` para *Cursiva*.
+            *   `<u>Tu texto</u>` para <u>Subrayado</u>.
+            
+            ### 2. La Regla de Oro del Reclutador
+            Evita listar solo responsabilidades. Los reclutadores (y los algoritmos) buscan **resultados**. 
+            *   **En lugar de:** "Encargado de soporte SAP."
+            *   **Usa:** "Reduje en un **30%** los tiempos de respuesta mediante la automatización de tickets con Python."
+            
+            ### 3. Palabras Clave (Keywords)
+            Asegúrate de incluir las tecnologías exactas que pide la vacante en tu sección de **Habilidades**. Los sistemas ATS buscan coincidencias exactas (ej. "SAP BTP" en lugar de solo "SAP").
+            
+            ### 4. Menos es Más
+            Si tienes mucha experiencia, trata de resumir tus roles más antiguos y darle más espacio (y más viñetas) a tus últimos 5 años de carrera.
+            """)
     st.title("Generador de CV")
+    esc = html.escape
     fecha_minima = date(1950, 1, 1)
     fecha_maxima = date.today()
     #Barra de herramientas customizadas para ST_QUILL
@@ -19,13 +40,13 @@ def main():
     st.header("Información Personal")
     col1, col2 = st.columns(2)
     with col1:
-        nombre = st.text_input("Nombre completo")
-        email = st.text_input("Email")
+        nombre = esc(st.text_input("Nombre completo"))
+        email = esc(st.text_input("Email"))
     with col2:
-        teléfono = st.text_input("Teléfono")
-        links = st.text_input("LinkedIn o Potafolio")
-    direccion = st.text_input("Dirección")
-    perfil = st.text_area("Perfil")
+        teléfono = esc(st.text_input("Teléfono"))
+        links = esc(st.text_input("LinkedIn o Potafolio"))
+    direccion = esc(st.text_input("Dirección"))
+    perfil = esc(st.text_area("Perfil"))
 
     #Experiencia
     st.header("Experiencia Laboral")
@@ -131,47 +152,60 @@ def main():
 
     #-------------------------Generación de PDF-------------------------
 
+    # --- EXPERIENCIA ---
     lista_experiencia = [
-    {
-        "Puesto": st.session_state.get(f"puesto_{i}", ""),
-        "Empresa": st.session_state.get(f"empresa_{i}", ""),
-        "Inicio": st.session_state[f"inicio_{i}"].strftime("%b %Y") if st.session_state.get(f"inicio_{i}") else "",
-        "Fin": st.session_state[f"fin_{i}"].strftime("%b %Y") if st.session_state.get(f"fin_{i}") else "Presente",
-        "Tareas y logros": "<br/>".join([f"• {linea.strip()}"for linea in str(st.session_state.get(f"tareas_{i}", "")).split("\n") if linea.strip()])
-    }
-    for i in range(st.session_state.num_experiencia)]
+        {
+            "Puesto": esc(st.session_state.get(f"puesto_{i}", "")),
+            "Empresa": esc(st.session_state.get(f"empresa_{i}", "")),
+            "Inicio": st.session_state[f"inicio_{i}"].strftime("%b %Y") if st.session_state.get(f"inicio_{i}") else "",
+            "Fin": st.session_state[f"fin_{i}"].strftime("%b %Y") if st.session_state.get(f"fin_{i}") else "Presente",
+            "Tareas y logros": "<br/>".join([
+                f"• {esc(linea.strip()).replace('&lt;b&gt;', '<b>').replace('&lt;/b&gt;', '</b>').replace('&lt;i&gt;', '<i>').replace('&lt;/i&gt;', '</i>').replace('&lt;u&gt;', '<u>').replace('&lt;/u&gt;', '</u>')}"
+                for linea in str(st.session_state.get(f"tareas_{i}", "")).split("\n") 
+                if linea.strip()
+            ])
+        }
+        for i in range(st.session_state.num_experiencia)
+    ]
 
-
+    # --- EDUCACIÓN ---
     lista_educacion = [
         {
-            "Titulo": st.session_state[f"titulo_{i}"],
+            "Titulo": esc(st.session_state.get(f"titulo_{i}", "")),
             "Año": st.session_state[f"anio_{i}"].strftime("%b %Y") if st.session_state.get(f"anio_{i}") else "",
-            "Institución": st.session_state[f"institucion_{i}"]
+            "Institución": esc(st.session_state.get(f"institucion_{i}", ""))
         }
-        for i in range(st.session_state.num_educacion)]
-        
+        for i in range(st.session_state.num_educacion)
+    ]
+
+    # --- IDIOMAS ---
     lista_idiomas = [
         {
-            "Idioma": st.session_state[f"idioma_{i}"],
-            "Nivel": st.session_state[f"nivel_{i}"]
+            "Idioma": esc(st.session_state.get(f"idioma_{i}", "")),
+            "Nivel": esc(st.session_state.get(f"nivel_{i}", ""))
         }
-        for i in range(st.session_state.num_idioma)]
-    
+        for i in range(st.session_state.num_idioma)
+    ]
+
+    # --- CERTIFICACIONES ---
     lista_certificaciones = [
         {
-            "Certificación": st.session_state[f"cert_{i}"],
-            "Institución": st.session_state[f"inst_{i}"], 
+            "Certificación": esc(st.session_state.get(f"cert_{i}", "")),
+            "Institución": esc(st.session_state.get(f"inst_{i}", "")), 
             "Año": st.session_state[f"anio_cert_{i}"].strftime("%b %Y") if st.session_state.get(f"anio_cert_{i}") else ""
         }
-        for i in range(st.session_state.num_cert)]
-    
+        for i in range(st.session_state.num_cert)
+    ]
+
+    # --- HABILIDADES ---
     lista_habilidades = [
         {
-            "Categoría": st.session_state[f"cat_{i}"],
-            "Habilidades": st.session_state[f"hab_{i}"]
+            "Categoría": esc(st.session_state.get(f"cat_{i}", "")),
+            "Habilidades": esc(st.session_state.get(f"hab_{i}", ""))
         }
-        for i in range(st.session_state.num_hab)]
-        
+        for i in range(st.session_state.num_hab)
+    ]
+  
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer)
     styles = getSampleStyleSheet()
