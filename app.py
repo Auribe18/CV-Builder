@@ -12,24 +12,27 @@ import html
 
 def main():
     with st.sidebar:
+         st.header("💡 Tips & Tricks")
          st.markdown("""
-            ### 1. Formato de Texto Permitido
-            En la sección de **Tareas y Logros**, puedes usar etiquetas básicas para resaltar información. El sistema las procesará correctamente para el PDF:
-            *   `<b>Tu texto</b>` para **Negrita** (Ideal para palabras clave o KPIs).
-            *   `<i>Tu texto</i>` para *Cursiva*.
-            *   `<u>Tu texto</u>` para <u>Subrayado</u>.
-            
-            ### 2. La Regla de Oro del Reclutador
-            Evita listar solo responsabilidades. Los reclutadores (y los algoritmos) buscan **resultados**. 
-            *   **En lugar de:** "Encargado de soporte SAP."
-            *   **Usa:** "Reduje en un **30%** los tiempos de respuesta mediante la automatización de tickets con Python."
-            
-            ### 3. Palabras Clave (Keywords)
-            Asegúrate de incluir las tecnologías exactas que pide la vacante en tu sección de **Habilidades**. Los sistemas ATS buscan coincidencias exactas (ej. "SAP BTP" en lugar de solo "SAP").
-            
-            ### 4. Menos es Más
-            Si tienes mucha experiencia, trata de resumir tus roles más antiguos y darle más espacio (y más viñetas) a tus últimos 5 años de carrera.
-            """)
+    ### 1. Formato de Texto
+    Puedes usar estas etiquetas en tus **Tareas y Logros** para resaltar información:
+    * `<b>Texto</b>` → **Negrita** (Úsalo para KPIs).
+    * `<i>Texto</i>` → *Cursiva*.
+    * `<u>Texto</u>` → <u>Subrayado</u>.
+    
+    ---
+    ### 2. Enfoque en Logros
+    Los reclutadores buscan resultados, no solo tareas.
+    * **Tip:** Intenta usar la fórmula: *Logré X, medido por Y, haciendo Z.*
+    
+    ---
+    ### 3. Keywords ATS
+    Usa términos técnicos exactos (ej. **SAP BTP**, **Python**, **RPA**) para que los filtros te encuentren fácilmente.
+    
+    ---
+    ### 4. Privacidad
+    Esta herramienta **no almacena tus datos**. El documento se genera localmente en tu navegador.
+    """)
     st.title("Generador de CV")
     esc = html.escape
     fecha_minima = date(1950, 1, 1)
