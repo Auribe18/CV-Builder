@@ -4,7 +4,6 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
 from io import BytesIO
-from xhtml2pdf import pisa
 import streamlit as st
 from streamlit_quill import st_quill
 from datetime import date
